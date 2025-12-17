@@ -1,12 +1,16 @@
+import os
 import mlflow
 import mlflow.sklearn
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 
-# Set MLflow lokal
-mlflow.set_tracking_uri("http://127.0.0.1:5000")
-mlflow.set_experiment("Pima-Diabetes-Basic")
+# Set MLflow
+if os.getenv("GITHUB_ACTIONS") == "true":
+    mlflow.set_experiment("Pima-Diabetes-Basic")
+else:
+    mlflow.set_tracking_uri("http://127.0.0.1:5000")
+    mlflow.set_experiment("Pima-Diabetes-Basic")
 
 # Load dataset hasil preprocessing
 X = pd.read_csv("diabetes_preprocessing/X_preprocessed.csv")
